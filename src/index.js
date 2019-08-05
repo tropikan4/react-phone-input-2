@@ -673,7 +673,7 @@ class ReactPhoneInput extends React.Component {
 
   getCountryDropdownList = () => {
     const { preferredCountries, onlyCountries, highlightCountryIndex, showDropdown, searchValue } = this.state;
-    const { enableSearchField, disableSearchIcon, searchClass, searchStyle, searchPlaceholder } = this.props;
+    const { enableSearchField, disableSearchIcon, searchClass, searchStyle, searchPlaceholder, localization } = this.props;
 
     const countryIsPreferred = this.state.preferredCountries.includes(this.state.selectedCountry);
     const allCountries = preferredCountries.concat(onlyCountries);
@@ -682,7 +682,7 @@ class ReactPhoneInput extends React.Component {
     let filteredCountries = (enableSearchField && sanitizedSearchValue)
       // using [...new Set()] here to get rid of duplicates
       ? [...new Set(allCountries.filter(({ name, iso2, dialCode }) =>
-        [`${name}`, `${iso2}`, `+${dialCode}`].some(field => field.toLowerCase().includes(sanitizedSearchValue))))]
+        [`${name}`, `${iso2}`, `+${dialCode}`, `${localization[iso2]}`].some(field => field.toLowerCase().includes(sanitizedSearchValue))))]
       : allCountries;
 
     if (this.props.disableAreaCodes) filteredCountries = this.deleteAreaCodes(filteredCountries);
